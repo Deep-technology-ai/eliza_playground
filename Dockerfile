@@ -1,8 +1,6 @@
 # Use a specific Node.js version for better reproducibility
 FROM node:23.3.0-slim AS builder
 
-ENV CHARACTER_FILE="/data/default-character.json"
-
 # Install pnpm globally and necessary build tools
 RUN npm install -g pnpm@9.15.4 && \
     apt-get update && \
@@ -75,7 +73,7 @@ COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/characters ./characters
 
 # Expose necessary ports
-EXPOSE 5173
+EXPOSE 3000 5173
 
 # Command to start the application
-CMD ["sh", "-c", "pnpm start --character=${CHARACTER_FILE}"]
+CMD ["sh", "-c", "pnpm start"]
